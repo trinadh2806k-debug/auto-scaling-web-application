@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cloud Auto Scaling Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div>
+        <h1>☁️ Cloud Auto Scaling Dashboard</h1>
+        <p>Cloud resource monitoring and automatic scaling simulation</p>
+      </div>
+      <div class="header-right">
+        <span class="pill" id="userPill">Guest</span>
+        <button class="small-btn secondary" onclick="toggleTheme()">🌙 Theme</button>
+      </div>
+    </header>
+
+    <main class="content">
+      <section id="authArea">
+        <div class="tabs">
+          <button class="small-btn" onclick="showAuth('login')">Login</button>
+          <button class="small-btn" onclick="showAuth('signup')">Sign Up</button>
+        </div>
+
+        <div class="grid">
+          <div class="card" id="loginCard">
+            <h2>Login</h2>
+            <input id="loginEmail" type="email" placeholder="Email">
+            <input id="loginPassword" type="password" placeholder="Password">
+            <button onclick="loginUser()">Login</button>
+            <p class="muted">Demo authentication is stored locally in the browser.</p>
+          </div>
+
+          <div class="card hidden" id="signupCard">
+            <h2>Create Account</h2>
+            <input id="signupName" type="text" placeholder="Full Name">
+            <input id="signupEmail" type="email" placeholder="Email">
+            <input id="signupPassword" type="password" placeholder="Password">
+            <button onclick="signupUser()">Create Account</button>
+            <p class="muted">This is a front-end demonstration only.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="dashboardArea" class="hidden">
+        <div class="grid">
+          <div class="card">
+            <h2>👤 Profile</h2>
+            <p><strong>Name:</strong> <span id="profileName"></span></p>
+            <p><strong>Email:</strong> <span id="profileEmail"></span></p>
+            <button class="danger" onclick="logoutUser()">Logout</button>
+          </div>
+
+          <div class="card">
+            <h2>📈 Scaling Controls</h2>
+            <label for="trafficSlider">Incoming Traffic</label>
+            <input id="trafficSlider" type="range" min="20" max="500" value="120">
+            <p class="muted">Increase traffic to simulate a high-load situation.</p>
+            <div class="row">
+              <button onclick="increaseTraffic(50)">+ Traffic</button>
+              <button class="secondary" onclick="decreaseTraffic(50)">− Traffic</button>
+            </div>
+            <div class="row">
+              <button class="success" onclick="scaleUp()">Force Scale Up</button>
+              <button class="secondary" onclick="scaleDown()">Force Scale Down</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>⚙️ Auto Scaling Policy</h2>
+            <div class="row">
+              <div>
+                <label for="minInput">Min Instances</label>
+                <input id="minInput" type="number" min="1" value="2">
+              </div>
+              <div>
+                <label for="maxInput">Max Instances</label>
+                <input id="maxInput" type="number" min="2" value="8">
+              </div>
+            </div>
+
+            <div class="row">
+              <div>
+                <label for="targetInput">Target CPU %</label>
+                <input id="targetInput" type="number" min="10" max="95" value="60">
+              </div>
+              <div>
+                <label for="modeSelect">Response Mode</label>
+                <select id="modeSelect">
+                  <option value="balanced">Balanced</option>
+                  <option value="cost">Cost Saver</option>
+                  <option value="performance">Performance</option>
+                </select>
+              </div>
+            </div>
+
+            <button onclick="savePolicy()">Save Policy</button>
+          </div>
+
+          <div class="card">
+            <h2>📊 Live Metrics</h2>
+            <div class="metric"><span>Traffic Requests</span><strong id="trafficValue">120</strong></div>
+            <div class="metric"><span>CPU Load</span><strong id="cpuValue">45%</strong></div>
+            <div class="metric"><span>Instances</span><strong id="instanceValue">2</strong></div>
+            <div class="metric"><span>Response Time</span><strong id="responseValue">180 ms</strong></div>
+            <div class="progress"><div class="bar" id="cpuBar"></div></div>
+            <div class="status" id="statusBox">System stable. No scaling needed.</div>
+          </div>
+
+          <div class="card">
+            <h2>🖥️ Cloud Instances</h2>
+            <div class="instances" id="instancesBox"></div>
+            <p class="muted" id="modeText">Mode: Balanced</p>
+          </div>
+
+          <div class="card">
+            <h2>🛡️ Security & Alerts</h2>
+            <p>Health Checks: <strong id="healthText">OK</strong></p>
+            <p>Load Balancer: <strong>Active</strong></p>
+            <p>Scaling Alerts: <strong id="alertText">None</strong></p>
+            <div class="row">
+              <button class="secondary" onclick="toggleAlerts()">Toggle Alerts</button>
+              <button class="secondary" onclick="runHealthCheck()">Health Check</button>
+            </div>
+          </div>
+
+          <div class="card full-width">
+            <h2>📝 Activity Log</h2>
+            <div class="log" id="logBox"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
